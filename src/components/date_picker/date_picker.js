@@ -42,6 +42,8 @@ export default function DatePicker({
     animation,
     editable = true,
     onlyShowInRangeDates = true,
+    editClick,
+    cancleClick,
     ...otherProps
 }) {
     let [date, setDate] = useState(),
@@ -52,7 +54,7 @@ export default function DatePicker({
         inputRef = useRef(null),
         calendarRef = useRef(null),
         ref = useRef({}),
-        separator = useMemo(() => range ? " ~ " : ", ", [range]),
+        separator = useMemo(() => range ? " تا " : ", ", [range]),
         closeCalendar = useCallback(() => {
             if (calendarRef.current) calendarRef.current.classList.remove("active")
 
@@ -332,7 +334,7 @@ export default function DatePicker({
                                             handleChange(ref.current.temporaryDate, true)
                                             delete ref.current.temporaryDate
                                         }
-
+                                        if(editClick) editClick()
                                         closeCalendar()
                                     }}
                                 >
@@ -342,6 +344,7 @@ export default function DatePicker({
                                     type="button"
                                     className="rmdp-button rmdp-action-button"
                                     onClick={() => {
+if(cancleClick)cancleClick()
                                         closeCalendar()
                                         delete ref.current.temporaryDate
                                     }}
